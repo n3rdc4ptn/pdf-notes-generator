@@ -2,6 +2,7 @@ import express from 'express'
 import fileUpload from 'express-fileupload'
 import cors from 'cors'
 import { modifyPDF } from './src/generator.js'
+import { COLORS } from './src/utils/colors.js'
 
 const app = express()
 
@@ -28,8 +29,9 @@ app.post('/generate', (req, res) => {
   const type = req.body.type || 'lines'
   const width = req.body.width || 0.5
   const boxSize = req.body.boxSize || 20
+  const color = COLORS.lightGray
 
-  modifyPDF(file.data, type, width, boxSize=boxSize)
+  modifyPDF(file.data, type, width, color, boxSize)
     .then(data => {
       res.contentType('application/pdf')
       res.send(Buffer.from(data))
