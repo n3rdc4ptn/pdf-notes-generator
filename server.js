@@ -18,7 +18,6 @@ app.use(fileUpload({
 }))
 
 app.post('/generate', (req, res) => {
-  console.log(req.files)
 
   if (!req.files || !req.files.file) {
     return res.status(400).send('No files were uploaded.')
@@ -26,9 +25,10 @@ app.post('/generate', (req, res) => {
 
   const { file } = req.files
 
-  console.log("Start modifying")
+  const type = req.body.type || 'lines'
+  const width = req.body.width || 0.5
 
-  modifyPDF(file.data, "lines", 0.5)
+  modifyPDF(file.data, type, width)
     .then(data => {
       res.contentType('application/pdf')
       res.send(Buffer.from(data))

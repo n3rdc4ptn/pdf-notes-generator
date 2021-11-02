@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import { PDFDocument } from 'pdf-lib'
 import { COLORS } from './utils/colors.js'
-import { createLinePage } from './utils/notes.js'
+import { createBoxesPage, createLinePage } from './utils/notes.js'
 
 // const pdfFilename = process.env.INPUT_FILE || './import.pdf'
 
@@ -43,7 +43,7 @@ import { createLinePage } from './utils/notes.js'
 /**
  * 
  * @param {Buffer} file 
- * @param {"lines" | "dots" | "rect"} type
+ * @param {"lines" | "dots" | "boxes"} type
  * @param {number} size
  * @param {require("pdf-lib").Color} color
  * @returns {Promise<Buffer>}
@@ -72,6 +72,22 @@ export async function modifyPDF(file, type, size, color) {
         const embedPage = await pdfDoc.embedPage(linePage)
     
         page.drawPage(embedPage, {
+          x: width,
+          y: 0,
+          scale: 1
+        })
+        break
+      case 'boxes':
+        const boxesPage = await createBoxesPage({
+          top: 60,
+          bottom: 20,
+          left: 20,
+          right: 20
+        }, rightWidth, height, 15, color || COLORS.lightGray)
+    
+        const embedBoxPage = await pdfDoc.embedPage(boxesPage)
+    
+        page.drawPage(embedBoxPage, {
           x: width,
           y: 0,
           scale: 1
