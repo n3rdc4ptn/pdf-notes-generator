@@ -29,7 +29,7 @@ app.post('/generate', (req, res) => {
   const width = req.body.width || 0.5
   const boxSize = req.body.boxSize || 20
 
-  modifyPDF(file.data, type, width, boxSize)
+  modifyPDF(file.data, type, width, boxSize=boxSize)
     .then(data => {
       res.contentType('application/pdf')
       res.send(Buffer.from(data))
