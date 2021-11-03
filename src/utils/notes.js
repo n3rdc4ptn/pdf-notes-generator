@@ -7,9 +7,10 @@ import { PDFDocument, } from 'pdf-lib'
  * @param {number} height
  * @param {number} lineHeight
  * @param {import('pdf-lib').Color} color
+ * @param {number} thickness
  * @return {import('pdf-lib').PDFPage}
  */
-export async function createLinePage(padding, width, height, lineHeight, color) {
+export async function createLinePage(padding, width, height, lineHeight, color, thickness) {
   const doc = await PDFDocument.create()
   const page = doc.addPage()
   page.setSize(width, height)
@@ -29,7 +30,7 @@ export async function createLinePage(padding, width, height, lineHeight, color) 
       start: { x, y },
       end: { x: x + lineLength, y },
       color,
-      thickness: 1
+      thickness: thickness || 0.5
     })
   }
 
@@ -44,9 +45,10 @@ export async function createLinePage(padding, width, height, lineHeight, color) 
  * @param {number} height
  * @param {number} boxSize
  * @param {import('pdf-lib').Color} color
+ * @param {number} thickness
  * @return {import('pdf-lib').PDFPage}
  */
- export async function createBoxesPage(padding, width, height, boxSize, color) {
+ export async function createBoxesPage(padding, width, height, boxSize, color, thickness) {
   const doc = await PDFDocument.create()
   const page = doc.addPage()
   page.setSize(width, height)
@@ -66,7 +68,7 @@ export async function createLinePage(padding, width, height, lineHeight, color) 
       start: { x, y },
       end: { x: x + lineWidth, y },
       color,
-      thickness: 1
+      thickness: thickness || 0.5
     })
   }
 

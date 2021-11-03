@@ -47,9 +47,10 @@ import { createBoxesPage, createLinePage } from './utils/notes.js'
  * @param {number} size
  * @param {require("pdf-lib").Color} color
  * @param {number} boxSize
+ * @param {number} thickness
  * @returns {Promise<Buffer>}
  */
-export async function modifyPDF(file, type, size, color, boxSize) {
+export async function modifyPDF(file, type, size, color, boxSize, thickness) {
   const pdfDoc = await PDFDocument.load(file)
 
   const pages = pdfDoc.getPages()
@@ -68,7 +69,7 @@ export async function modifyPDF(file, type, size, color, boxSize) {
           bottom: 20,
           left: 40,
           right: 40
-        }, rightWidth, height, 30, color || COLORS.lightGray)
+        }, rightWidth, height, 30, color || COLORS.lightGray, thickness || 0.5)
     
         const embedPage = await pdfDoc.embedPage(linePage)
     
@@ -84,7 +85,7 @@ export async function modifyPDF(file, type, size, color, boxSize) {
           bottom: 20,
           left: 20,
           right: 20
-        }, rightWidth, height, boxSize || 20, color || COLORS.lightGray)
+        }, rightWidth, height, boxSize || 20, color || COLORS.lightGray, thickness || 0.5)
     
         const embedBoxPage = await pdfDoc.embedPage(boxesPage)
     
