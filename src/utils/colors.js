@@ -1,6 +1,9 @@
 import { rgb } from 'pdf-lib'
 
 export const COLORS = {
+  parseByString: (name) => {
+    return COLORS[name]
+  },
   black: rgb(0, 0, 0),
   white: rgb(1, 1, 1),
   red: rgb(1, 0, 0),

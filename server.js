@@ -30,7 +30,7 @@ app.post('/generate', (req, res) => {
   const width = parseFloat(req.body.width)|| 0.5
   const boxSize = parseInt(req.body.boxSize) || 20
   const thickness = parseFloat(req.body.thickness) || 0.5
-  const color = COLORS.lightGray
+  const color = COLORS.parseByString(req.body.color || 'lightGray')
 
   modifyPDF(file.data, type, width, color, boxSize, thickness)
     .then(data => {
